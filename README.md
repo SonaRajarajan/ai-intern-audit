@@ -4,7 +4,8 @@
 [![Python Version](https://img.shields.io/badge/Python-3.10%2B-blue?style=for-the-badge)](https://github.com/SonaRajarajan/ai-intern-audit)
 [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](https://github.com/SonaRajarajan/ai-intern-audit)
 
-> **Candidate**: V R Sona - 22MIA1161 (Neo ID : D1P8E7H0 ) 
+> **Candidate**: V R Sona - 22MIA1161 (Neo ID : D1P8E7H0 )
+
 > **Repository URL**: [https://github.com/SonaRajarajan/ai-intern-audit](https://github.com/SonaRajarajan/ai-intern-audit)  
 
 ---
