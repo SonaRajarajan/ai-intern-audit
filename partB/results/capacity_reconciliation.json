@@ -1,0 +1,29 @@
+{
+  "model_architecture": {
+    "layers": 28,
+    "kv_heads": 8,
+    "head_dim": 128,
+    "precision": "fp16 (2 bytes)"
+  },
+  "kv_cache_per_token": {
+    "bytes": 114688,
+    "kib": 112.0
+  },
+  "per_4096_sequence": {
+    "bytes": 469762048,
+    "mib": 448.0,
+    "gb": 0.469762
+  },
+  "gpu_memory_breakdown_gb": {
+    "total_gpu_ram": 24.0,
+    "gpu_memory_utilization": 0.92,
+    "usable_gpu_ram": 22.080000000000002,
+    "model_weights": 8.4,
+    "non_kv_overhead": 1.6,
+    "available_for_kv_cache": 12.080000000000002
+  },
+  "concurrency_4096_token_sequences": {
+    "theoretical_exact": 25.72,
+    "max_concurrency_integer": 25
+  }
+}
