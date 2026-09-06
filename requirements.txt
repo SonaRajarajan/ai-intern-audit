@@ -1,0 +1,6 @@
+# Minimal reproducible requirements for AI Team Intern Assignment Audit
+transformers>=4.38.0
+tiktoken>=0.6.0
+regex>=2023.12.25
+pandas>=2.0.0
+numpy>=1.24.0
