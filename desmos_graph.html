@@ -63,10 +63,10 @@
   <header>
     <div>
       <h1>AI Team Intern Audit — Complete Multi-Part Desmos Graph</h1>
-      <p>Clean Reset Script with Part A, Part B, and Part C</p>
+      <p>Clean Reset via removeExpressions()</p>
     </div>
     <div class="btn-group">
-      <button class="btn btn-success" onclick="copyConsoleScript()">📋 Copy Clean Reset Script</button>
+      <button class="btn btn-success" onclick="copyConsoleScript()">📋 Copy Working Reset Script</button>
       <a href="https://www.desmos.com/calculator/ebhw7wvtzf" target="_blank" style="text-decoration:none;">
         <button class="btn">🚀 Open Desmos.com Link</button>
       </a>
@@ -119,11 +119,11 @@
     calculator.setMathBounds({ left: -500, right: 4500, bottom: -20, top: 300 });
 
     function copyConsoleScript() {
-      var scriptText = "Calc.blank();\n" +
+      var scriptText = "Calc.removeExpressions(Calc.getExpressions());\n" +
                        "Calc.setExpressions(" + JSON.stringify(mathExpressions) + ");\n" +
                        "Calc.setMathBounds({ left: -500, right: 4500, bottom: -20, top: 300 });";
       navigator.clipboard.writeText(scriptText).then(function() {
-        alert("Copied Clean Reset Script! Paste into Chrome Console and click Save!");
+        alert("Copied Reset Script! Paste into Chrome Console and click Save!");
       });
     }
   </script>
