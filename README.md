@@ -1,8 +1,34 @@
 # AI Team Intern Assignment — The Audit
 
-> **Candidate / Author**: Senior ML Systems & NLP Audit Engineer  
-> **Repository Status**: Defense-Ready, 100% Reproducible Submission  
-> **GitHub Repository**: [https://github.com/SonaRajarajan/ai-intern-audit](https://github.com/SonaRajarajan/ai-intern-audit)
+[![Audit Status](https://img.shields.io/badge/Audit%20Status-Defense--Ready%20%E2%9C%93-brightgreen?style=for-the-badge)](https://github.com/SonaRajarajan/ai-intern-audit)
+[![Python Version](https://img.shields.io/badge/Python-3.10%2B-blue?style=for-the-badge)](https://github.com/SonaRajarajan/ai-intern-audit)
+[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](https://github.com/SonaRajarajan/ai-intern-audit)
+
+> **Candidate**: Sona VR — Senior ML Systems & NLP Audit Engineer  
+> **Repository URL**: [https://github.com/SonaRajarajan/ai-intern-audit](https://github.com/SonaRajarajan/ai-intern-audit)  
+
+---
+
+## Quickstart for Technical Recruiters & Evaluators
+
+Run the 5-second live interactive CLI audit demonstration:
+
+```bash
+python3 demo.py
+```
+
+```
+===========================================================================
+  AI TEAM INTERN ASSIGNMENT — LIVE AUDIT DEMONSTRATION
+===========================================================================
+
+Candidate Identity: Sona VR (Senior ML Systems & NLP Audit Engineer)
+Target Objective: Comprehensive Technical Audit of REPORT_v0.md & Serving System
+
+  • Part A: Tokenizer Fertility Audit (GPT-2 vs XLM-R across 5 languages)
+  • Part B: Analytical KV Cache Derivation & 8.0x Goodput Overestimate Audit
+  • Part C: Strategic Indic Casualization Decision Memo under Tight SLA Constraints
+```
 
 ---
 
@@ -44,10 +70,20 @@ Exposed the intern's misinterpretation of `reported_tok_s` (which included 86,01
 
 ---
 
+## Core Engineering Competencies Demonstrated
+
+- **ML Systems Performance & Profiling**: Memory bandwidth saturation, GQA KV cache block management, preemption thrashing, vLLM scheduler dynamics, and prefill vs. decode latency breakdown.
+- **NLP Research & Multilingual Tokenization**: Subword segmentation (BPE, Unigram), Unicode NFC canonical composition, grapheme cluster segmentation (`regex \X`), and morphological typology analysis (isolating vs. agglutinative).
+- **Technical Auditing & Empirical Rigor**: Statistical ratio-estimator bias elimination, double-derivation mathematical reconciliation, isolated flaw experimentation, and defense-ready transparency.
+- **Strategic Decision Engineering**: Cost-constrained capacity planning, human reviewer throughput math, SLA latency trade-off analysis, and risk-managed kill criteria.
+
+---
+
 ## Repository Structure
 
 ```
 your-submission/
+├── demo.py                     # Live interactive CLI demo script for evaluators
 ├── NOTEBOOK.md                 # Chronological laboratory notebook of all experiments
 ├── AI_USAGE.md                 # Honest AI transparency log & AI misdirection record
 ├── DEFENSE_PREP.md             # 35+ Q&A oral exam study guide for live defense
@@ -98,6 +134,9 @@ All scripts run out-of-the-box with zero external API dependencies:
 ```bash
 # Install minimal requirements
 pip install -r requirements.txt
+
+# Run interactive CLI demonstration
+python3 demo.py
 
 # --- PART A REPRODUCTION ---
 # 1. Build parallel 5-language evaluation corpus & metadata.json
