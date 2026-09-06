@@ -1,12 +1,12 @@
 # AI Team Intern Assignment — The Audit
 
 [![Audit Status](https://img.shields.io/badge/Audit%20Status-Defense--Ready%20%E2%9C%93-brightgreen?style=for-the-badge)](https://github.com/SonaRajarajan/ai-intern-audit)
+[![Desmos Link](https://img.shields.io/badge/Desmos-Interactive%20Graph-orange?style=for-the-badge)](https://www.desmos.com/calculator/ebhw7wvtzf)
 [![Python Version](https://img.shields.io/badge/Python-3.10%2B-blue?style=for-the-badge)](https://github.com/SonaRajarajan/ai-intern-audit)
-[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](https://github.com/SonaRajarajan/ai-intern-audit)
 
-> **Candidate**: V R Sona - 22MIA1161 (Neo ID : D1P8E7H0 )
-
-> **Repository URL**: [https://github.com/SonaRajarajan/ai-intern-audit](https://github.com/SonaRajarajan/ai-intern-audit)  
+> **Candidate**: Sona VR — Senior ML Systems & NLP Audit Engineer  
+> **GitHub Repository**: [https://github.com/SonaRajarajan/ai-intern-audit](https://github.com/SonaRajarajan/ai-intern-audit)  
+> **Official Desmos Link**: [https://www.desmos.com/calculator/ebhw7wvtzf](https://www.desmos.com/calculator/ebhw7wvtzf)
 
 ---
 
@@ -63,20 +63,22 @@ Exposed the intern's misinterpretation of `reported_tok_s` (which included 86,01
 
 ---
 
+## Official Desmos Calculator Link & Derived Equations
+
+- **Saved Desmos Graph**: [https://www.desmos.com/calculator/ebhw7wvtzf](https://www.desmos.com/calculator/ebhw7wvtzf)
+- **Key Equations Plotted**:
+  - Max Concurrency Curve: $y = \frac{12.08}{0.000114688 \cdot x}$ | Point: `(4096, 25.71)`
+  - True Output Goodput Curve: $y = 1607.4 \cdot \left(\frac{512}{x + 512}\right)$ | Point: `(3584, 200.925)`
+  - Usable KV RAM Ceiling: $y = 12.08 \text{ GB}$
+  - Batch 24 KV RAM Usage: $y = 24 \cdot 0.000114688 \cdot x$
+
+---
+
 ## Key Audit Discoveries Summary
 
 1. **Part A (Flaw Isolation)**: Experimentally isolated 6 distinct flaws in `fertility.py`: `line.split(" ")` whitespace bug (+14.29% delta), lowercasing casing distortion, `len(line)` UTF-16 code unit error (+36.36% delta), unweighted average of ratios statistical bias, and the tokenizer vocabulary myth (-82.98% token reduction). Proved `unicodedata.normalize("NFC")` is 100% correct.
 2. **Part B (Serving Capacity)**: Derived exact KV cache memory per token ($114,688 \text{ bytes/token} = \mathbf{112.0 \text{ KiB/token}}$) and maximum 4096-token sequence concurrency (**25 sequences**) on NVIDIA L4 (24GB). Reconciled theoretical concurrency against `bench_log.csv` preemption jump at Batch 32.
 3. **Part C (Indic Strategy)**: Calculated human reviewer capacity (**300 total evaluated examples max** across 20 hours for Hindi+Kannada only). Recommended **System Prompt Engineering / Few-Shot ICL (Option C)** as primary launch path, rejecting Option B (1B Rewriter Model) due to +2.5s latency penalty.
-
----
-
-## Core Engineering Competencies Demonstrated
-
-- **ML Systems Performance & Profiling**: Memory bandwidth saturation, GQA KV cache block management, preemption thrashing, vLLM scheduler dynamics, and prefill vs. decode latency breakdown.
-- **NLP Research & Multilingual Tokenization**: Subword segmentation (BPE, Unigram), Unicode NFC canonical composition, grapheme cluster segmentation (`regex \X`), and morphological typology analysis (isolating vs. agglutinative).
-- **Technical Auditing & Empirical Rigor**: Statistical ratio-estimator bias elimination, double-derivation mathematical reconciliation, isolated flaw experimentation, and defense-ready transparency.
-- **Strategic Decision Engineering**: Cost-constrained capacity planning, human reviewer throughput math, SLA latency trade-off analysis, and risk-managed kill criteria.
 
 ---
 
@@ -171,11 +173,3 @@ Every claim in this repository is strictly tagged by evidence category:
 - `[PREDICTED]`: Forecasted quantitative effect based on measured/derived evidence.
 - `[ASSUMED]`: Explicit planning assumption for strategic decision-making.
 - `[UNVERIFIED]`: Highlighted items that cannot be established from available data.
-
----
-
-## Environment & Dependencies
-
-- **OS**: macOS / Linux
-- **Python**: Python 3.10+
-- **Core Packages**: `transformers>=4.38.0`, `tiktoken>=0.6.0`, `regex>=2023.12.25`, `pandas>=2.0.0`, `numpy>=1.24.0`, `matplotlib>=3.7.0`
