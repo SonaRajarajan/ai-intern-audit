@@ -18,29 +18,39 @@
     }
     header {
       background: #1e293b;
-      padding: 14px 24px;
+      padding: 12px 24px;
       border-bottom: 1px solid #334155;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
     header h1 {
-      font-size: 20px;
+      font-size: 18px;
       color: #38bdf8;
       font-weight: 700;
     }
     header p {
-      font-size: 13px;
+      font-size: 12px;
       color: #94a3b8;
     }
-    .badge {
+    .btn-group {
+      display: flex;
+      gap: 10px;
+    }
+    .btn {
       background: #0284c7;
       color: #fff;
-      padding: 4px 10px;
-      border-radius: 9999px;
-      font-size: 12px;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 13px;
       font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
     }
+    .btn:hover { background: #0369a1; }
+    .btn-success { background: #16a34a; }
+    .btn-success:hover { background: #15803d; }
     #calculator {
       flex: 1;
       width: 100%;
@@ -55,7 +65,12 @@
       <h1>AI Team Intern Audit — Complete Desmos Mathematical Graph</h1>
       <p>Interactive graph deriving Part A (Tokenizer Fertility), Part B (KV Cache & Concurrency), Part C (Casualization)</p>
     </div>
-    <span class="badge">Official Audit Graph</span>
+    <div class="btn-group">
+      <button class="btn btn-success" onclick="copyConsoleScript()">📋 Copy 1-Click Desmos.com Script</button>
+      <a href="https://www.desmos.com/calculator/ebhw7wvtzf" target="_blank" style="text-decoration:none;">
+        <button class="btn">🚀 Open Desmos.com Link</button>
+      </a>
+    </div>
   </header>
 
   <div id="calculator"></div>
@@ -69,8 +84,7 @@
       border: false
     });
 
-    // Set graph math state with all 3 Parts pre-configured
-    calculator.setExpressions([
+    var mathExpressions = [
       // Folder 1: Part A Tokenizer Fertility Audit
       { id: 'f1', type: 'folder', title: 'Part A: Tokenizer Fertility & Typology Audit' },
       { id: 'e1', folderId: 'f1', latex: 'F_{eng}(x) = 1.15 x', color: '#2d70b3', label: 'English Baseline (GPT-2 Fertility = 1.15)', showLabel: true },
@@ -101,15 +115,19 @@
       { id: 'opt_a', folderId: 'f3', latex: 'L_{lora} = (120, 91)', color: '#2d70b3', label: 'Option A: LoRA SFT (120ms, 91% acc)', showLabel: true },
       { id: 'opt_b', folderId: 'f3', latex: 'L_{agent} = (2620, 89)', color: '#d64545', label: 'Option B: Rewriter Agent (2620ms - REJECTED)', showLabel: true },
       { id: 'opt_c', folderId: 'f3', latex: 'L_{prompt} = (135, 88)', color: '#388c46', label: 'Option C: System Prompt (135ms, 88% acc - RECOMMENDED)', showLabel: true }
-    ]);
+    ];
 
-    // Set initial viewport range for standard viewing
-    calculator.setMathBounds({
-      left: -200,
-      right: 4500,
-      bottom: -50,
-      top: 1800
-    });
+    // Load into local API calculator
+    calculator.setExpressions(mathExpressions);
+    calculator.setMathBounds({ left: -200, right: 4500, bottom: -50, top: 1800 });
+
+    function copyConsoleScript() {
+      var scriptText = "Calc.setExpressions(" + JSON.stringify(mathExpressions) + ");\n" +
+                       "Calc.setMathBounds({ left: -200, right: 4500, bottom: -50, top: 1800 });";
+      navigator.clipboard.writeText(scriptText).then(function() {
+        alert("Copied 1-Click Desmos Script! Now open https://www.desmos.com/calculator/ebhw7wvtzf, press Cmd+Option+J (or F12), paste, press Enter, and click Save!");
+      });
+    }
   </script>
 </body>
 </html>
