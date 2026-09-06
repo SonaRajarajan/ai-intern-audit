@@ -15,6 +15,8 @@ The previous intern's report (`REPORT_v0.md`) claimed that Hindi serving cost is
 
 Our audit revealed that the high token count was caused by using an English-centric tokenizer (`gpt2`) lacking Indic vocabulary. When evaluated on a 5-language parallel corpus using an Indic-aware multilingual tokenizer (`xlm-roberta-base`), the actual token overhead for Indic traffic is vastly lower:
 
+![Tokenizer Fertility Comparison](figures/tokenizer_fertility_comparison.png)
+
 | Language | Script Family | GPT2 Fertility (`tok/word`) | XLM-R Fertility (`tok/word`) | XLM-R Tokens / Parallel Sentence | Overhead vs. English (XLM-R) |
 |---|---|---|---|---|---|
 | **English (`eng`)** | Latin | 1.18 | 1.31 | 11.68 tok/sent | 1.00× (Baseline) |
@@ -24,6 +26,8 @@ Our audit revealed that the high token count was caused by using an English-cent
 | **Telugu (`tel`)** | Dravidian | 22.75 | 2.45 | 17.32 tok/sent | **1.48×** |
 
 *Key Result*: On parallel semantic content, Hindi requires only **1.32× tokens relative to English** under an Indic-aware tokenizer—not 6.0×.
+
+![Tokens Per Parallel Sentence](figures/tokens_per_sentence_parallel.png)
 
 ---
 
@@ -57,7 +61,7 @@ Our audit revealed that the high token count was caused by using an English-cent
 
 ## Detailed Audit of `fertility.py` Flaws (A2)
 
-See [`results/master_evidence_table.csv`](file:///Users/sona/Downloads/Glitchcon_app%202/your-submission/partA/results/master_evidence_table.csv) for full reproducible experimental outputs.
+See [`results/master_evidence_table.csv`](results/master_evidence_table.csv) for full reproducible experimental outputs.
 
 1. **Finding 1 [Code Bug — `line.split(" ")`]**: Naive `split(" ")` retains empty strings on double spaces, artificially inflating word count denominators and under-reporting fertility by **+14.29%**.
 2. **Finding 2 [Code Bug — `line.lower()`]**: Lowercasing English text strips proper noun capital letters, reducing GPT-2 subword splits and artificially suppressing the English baseline.
@@ -79,4 +83,7 @@ python3 partA/scripts/audit_fertility.py
 
 # 3. Run multi-tokenizer & multi-denominator benchmark
 python3 partA/scripts/run_tokenizer_eval.py --corpus_dir partA/corpus
+
+# 4. Generate figures
+python3 partA/scripts/generate_plots.py
 ```

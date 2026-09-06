@@ -2,22 +2,45 @@
 
 > **Candidate / Author**: Senior ML Systems & NLP Audit Engineer  
 > **Repository Status**: Defense-Ready, 100% Reproducible Submission  
+> **GitHub Repository**: [https://github.com/SonaRajarajan/ai-intern-audit](https://github.com/SonaRajarajan/ai-intern-audit)
 
 ---
 
-## Executive Summary
+## Executive Summary & Visual Audit Highlights
 
 This repository contains the complete audit and defense-ready submission for the AI Team Intern take-home assignment (**"The Audit"**).
 
 We conducted an end-to-end empirical and analytical audit of the starter kit files (`REPORT_v0.md`, `fertility.py`, `model_spec.md`, `bench_log.csv`), exposing critical flaws in the previous intern's analysis, deriving exact serving memory limits, proving an 8.0× throughput reporting error, and formulating a resource-constrained Indic LLM casualization strategy.
 
-### Key Audit Findings
+### 1. Tokenizer Fertility Audit (GPT-2 vs XLM-RoBERTa)
 
-1. **Part A (Tokenizer Audit)**: `REPORT_v0.md` claimed Hindi tokenization is **5.89× to 7.0× more expensive** than English due to Devanagari script. **Proved False.** Switching from an English-centric BPE tokenizer (`gpt2`) to an Indic-aware tokenizer (`xlm-roberta-base`) reduces Hindi token cost on parallel content to only **1.32× English**.
-2. **Part A (Flaw Isolation)**: Experimentally isolated 6 distinct flaws in `fertility.py`: `line.split(" ")` whitespace bug (+14.29% delta), lowercasing casing distortion, `len(line)` UTF-16 code point error (+36.36% delta), unweighted average of ratios statistical bias, and the tokenizer vocabulary myth (-82.98% token reduction). Proved `unicodedata.normalize("NFC")` is 100% correct.
-3. **Part B (Serving Capacity)**: Derived exact KV cache memory per token ($114,688 \text{ bytes/token} = \mathbf{112.0 \text{ KiB/token}}$) and maximum 4096-token sequence concurrency (**25 sequences**) on NVIDIA L4 (24GB). Reconciled theoretical concurrency against `bench_log.csv` preemption jump at Batch 32.
-4. **Part B (Goodput & Misread Column)**: Exposed intern's misinterpretation of `reported_tok_s` (which included 86,016 prompt prefill tokens). Derived true output generation goodput via two independent mathematical methods, converging to **200.92 output tokens/sec**—an **8.0× overestimate** in v0.
-5. **Part C (Indic Strategy)**: Calculated human reviewer capacity (**300 total evaluated examples max** across 20 hours for Hindi+Kannada only). Recommended **System Prompt Engineering / Few-Shot ICL (Option C)** as primary launch path, rejecting Option B (1B Rewriter Model) due to +2.5s latency penalty.
+`REPORT_v0.md` claimed Hindi tokenization is **5.89× to 7.0× more expensive** than English due to Devanagari script. **Proved False.** Switching from an English-centric BPE tokenizer (`gpt2`) to an Indic-aware tokenizer (`xlm-roberta-base`) reduces Hindi token cost on parallel content to only **1.32× English**.
+
+![Tokenizer Fertility Comparison](partA/figures/tokenizer_fertility_comparison.png)
+
+---
+
+### 2. Operational Routing & Parallel Sentence Token Overhead
+
+Dravidian languages (Tamil, Kannada, Telugu) are highly agglutinative, fusing multiple suffixes into single words. Comparing `tokens / whitespace_word` misrepresents linguistic efficiency. When evaluated on parallel sentences holding semantic content constant, Indic token overhead under an Indic-aware tokenizer is only **+32% for Hindi** and **+45–56% for Dravidian languages**:
+
+![Tokens Per Parallel Sentence](partA/figures/tokens_per_sentence_parallel.png)
+
+---
+
+### 3. Serving Throughput vs True Generation Goodput & Preemption Thrashing
+
+Exposed the intern's misinterpretation of `reported_tok_s` (which included 86,016 prompt prefill tokens). True output generation goodput derived via two independent mathematical methods converges to **200.92 output tokens/sec**—an **8.0× overestimate** in v0. Furthermore, exceeding GPU KV capacity (~25 sequences) triggers preemption thrashing at Batch 32 and 48, causing throughput collapse:
+
+![Serving Throughput vs True Goodput Anomaly](partB/figures/throughput_anomaly_reconciliation.png)
+
+---
+
+## Key Audit Discoveries Summary
+
+1. **Part A (Flaw Isolation)**: Experimentally isolated 6 distinct flaws in `fertility.py`: `line.split(" ")` whitespace bug (+14.29% delta), lowercasing casing distortion, `len(line)` UTF-16 code unit error (+36.36% delta), unweighted average of ratios statistical bias, and the tokenizer vocabulary myth (-82.98% token reduction). Proved `unicodedata.normalize("NFC")` is 100% correct.
+2. **Part B (Serving Capacity)**: Derived exact KV cache memory per token ($114,688 \text{ bytes/token} = \mathbf{112.0 \text{ KiB/token}}$) and maximum 4096-token sequence concurrency (**25 sequences**) on NVIDIA L4 (24GB). Reconciled theoretical concurrency against `bench_log.csv` preemption jump at Batch 32.
+3. **Part C (Indic Strategy)**: Calculated human reviewer capacity (**300 total evaluated examples max** across 20 hours for Hindi+Kannada only). Recommended **System Prompt Engineering / Few-Shot ICL (Option C)** as primary launch path, rejecting Option B (1B Rewriter Model) due to +2.5s latency penalty.
 
 ---
 
@@ -37,15 +60,15 @@ your-submission/
 │   ├── corpus/
 │   │   ├── metadata.json       # Corpus summary statistics
 │   │   ├── README.md           # Dataset provenance & caveats essay
-│   │   ├── eng.txt             # English parallel sentences (NFC normalized)
-│   │   ├── hin.txt             # Hindi parallel sentences
-│   │   ├── tam.txt             # Tamil parallel sentences
-│   │   ├── kan.txt             # Kannada parallel sentences
-│   │   └── tel.txt             # Telugu parallel sentences
+│   │   └── eng.txt, hin.txt, tam.txt, kan.txt, tel.txt # Parallel corpora
+│   ├── figures/
+│   │   ├── tokenizer_fertility_comparison.png
+│   │   └── tokens_per_sentence_parallel.png
 │   ├── scripts/
 │   │   ├── prepare_corpus.py   # Corpus preparation & normalization script
 │   │   ├── audit_fertility.py  # Isolated flaw reproduction script for fertility.py
 │   │   ├── compute_metrics.py  # Helper module for grapheme/word/byte calculations
+│   │   ├── generate_plots.py   # Plot generation script
 │   │   └── run_tokenizer_eval.py # Cross-language multi-tokenizer benchmark
 │   └── results/
 │       ├── master_evidence_table.csv # Evidence table of all A2 flaws & A3 results
@@ -53,6 +76,8 @@ your-submission/
 │
 ├── partB/
 │   ├── README.md               # Part B capacity reconciliation documentation
+│   ├── figures/
+│   │   └── throughput_anomaly_reconciliation.png
 │   ├── scripts/
 │   │   ├── kv_cache_calc.py    # Analytical KV cache & concurrency solver
 │   │   └── reconcile_benchmark.py # Log parser, goodput solver & anomaly analyzer
@@ -84,11 +109,14 @@ python3 partA/scripts/audit_fertility.py
 # 3. Run multi-tokenizer & multi-denominator benchmark (generates tokenizer_summary.json)
 python3 partA/scripts/run_tokenizer_eval.py --corpus_dir partA/corpus
 
+# 4. Generate high-resolution plots for README
+python3 partA/scripts/generate_plots.py
+
 # --- PART B REPRODUCTION ---
-# 4. Run analytical KV cache & concurrency solver (B1)
+# 5. Run analytical KV cache & concurrency solver (B1)
 python3 partB/scripts/kv_cache_calc.py
 
-# 5. Run benchmark reconciliation, goodput solver & anomaly analyzer (B2, B3, B4)
+# 6. Run benchmark reconciliation, goodput solver & anomaly analyzer (B2, B3, B4)
 python3 partB/scripts/reconcile_benchmark.py
 ```
 
@@ -110,4 +138,4 @@ Every claim in this repository is strictly tagged by evidence category:
 
 - **OS**: macOS / Linux
 - **Python**: Python 3.10+
-- **Core Packages**: `transformers>=4.38.0`, `tiktoken>=0.6.0`, `regex>=2023.12.25`, `pandas>=2.0.0`, `numpy>=1.24.0`
+- **Core Packages**: `transformers>=4.38.0`, `tiktoken>=0.6.0`, `regex>=2023.12.25`, `pandas>=2.0.0`, `numpy>=1.24.0`, `matplotlib>=3.7.0`

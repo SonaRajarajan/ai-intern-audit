@@ -4,6 +4,8 @@
 
 This directory contains the mathematical derivations, log reconciliation, anomaly root-cause analysis, and diagnostic instrumentation design for FLM-4B-Instruct serving performance on NVIDIA L4 (24GB).
 
+![Serving Throughput Anomaly & Reconciliation](figures/throughput_anomaly_reconciliation.png)
+
 ---
 
 ## B1: KV Cache Memory & Concurrency Derivation
