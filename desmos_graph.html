@@ -2,130 +2,114 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Serving Capacity & Tokenizer Audit Interactive Graph — AI Intern Audit</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Desmos Graphing Calculator — AI Team Intern Audit</title>
+  <!-- Desmos API Script -->
+  <script src="https://www.desmos.com/api/v1.9/calculator.js?apiKey=dcb377017b3d49f73ca08d993e6476e0"></script>
   <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      margin: 0;
-      padding: 24px;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background-color: #0b0f19;
+      background-color: #0f172a;
       color: #f8fafc;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
-    h1 { margin: 0 0 8px 0; color: #38bdf8; font-size: 24px; }
-    p { margin: 0 0 20px 0; color: #94a3b8; font-size: 14px; }
-    .chart-box {
+    header {
       background: #1e293b;
-      padding: 20px;
-      border-radius: 12px;
-      border: 1px solid #334155;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      padding: 14px 24px;
+      border-bottom: 1px solid #334155;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
-    svg { width: 100%; height: 500px; }
-    .grid-cards {
-      margin-top: 20px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 16px;
+    header h1 {
+      font-size: 20px;
+      color: #38bdf8;
+      font-weight: 700;
     }
-    .card {
-      background: #1e293b;
-      padding: 16px;
-      border-radius: 8px;
-      border-left: 4px solid #38bdf8;
+    header p {
+      font-size: 13px;
+      color: #94a3b8;
     }
-    .card h3 { margin: 0 0 6px 0; font-size: 15px; color: #f1f5f9; }
-    .card p { margin: 0; font-size: 13px; color: #cbd5e1; }
+    .badge {
+      background: #0284c7;
+      color: #fff;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    #calculator {
+      flex: 1;
+      width: 100%;
+      height: calc(100vh - 65px);
+    }
   </style>
 </head>
 <body>
 
-  <h1>Interactive Serving Capacity & Tokenizer Audit Graph</h1>
-  <p>Derived for NVIDIA L4 24GB GPU, FLM-4B-Instruct model architecture, and multi-language evaluation.</p>
-
-  <div class="chart-box">
-    <svg viewBox="0 0 900 480" preserveAspectRatio="xMidYMid meet">
-      <!-- Background & Grid -->
-      <rect width="900" height="480" fill="#1e293b" rx="8" />
-      <g stroke="#334155" stroke-dasharray="4" stroke-width="1">
-        <line x1="80" y1="60" x2="840" y2="60" />
-        <line x1="80" y1="135" x2="840" y2="135" />
-        <line x1="80" y1="210" x2="840" y2="210" />
-        <line x1="80" y1="285" x2="840" y2="285" />
-        <line x1="80" y1="360" x2="840" y2="360" />
-        <line x1="80" y1="410" x2="840" y2="410" />
-        
-        <!-- Vertical Grid -->
-        <line x1="80" y1="60" x2="80" y2="410" />
-        <line x1="270" y1="60" x2="270" y2="410" />
-        <line x1="460" y1="60" x2="460" y2="410" />
-        <line x1="650" y1="60" x2="650" y2="410" />
-        <line x1="840" y1="60" x2="840" y2="410" />
-      </g>
-
-      <!-- Y Axis Labels Left (Concurrency & Goodput) -->
-      <text x="70" y="415" fill="#94a3b8" font-size="12" text-anchor="end">0</text>
-      <text x="70" y="365" fill="#94a3b8" font-size="12" text-anchor="end">50</text>
-      <text x="70" y="290" fill="#94a3b8" font-size="12" text-anchor="end">100</text>
-      <text x="70" y="215" fill="#94a3b8" font-size="12" text-anchor="end">150</text>
-      <text x="70" y="140" fill="#94a3b8" font-size="12" text-anchor="end">200</text>
-      <text x="70" y="65" fill="#94a3b8" font-size="12" text-anchor="end">250</text>
-
-      <!-- X Axis Labels (Sequence Length Tokens) -->
-      <text x="80" y="435" fill="#94a3b8" font-size="12" text-anchor="middle">0</text>
-      <text x="270" y="435" fill="#94a3b8" font-size="12" text-anchor="middle">1024</text>
-      <text x="460" y="435" fill="#94a3b8" font-size="12" text-anchor="middle">2048</text>
-      <text x="650" y="435" fill="#94a3b8" font-size="12" text-anchor="middle">3072</text>
-      <text x="840" y="435" fill="#94a3b8" font-size="12" text-anchor="middle">4096</text>
-
-      <!-- Curve 1: Max Concurrency (Blue) -->
-      <path d="M 127 60 Q 200 280 460 336 T 840 371" fill="none" stroke="#38bdf8" stroke-width="3.5" />
-      <circle cx="840" cy="371" r="6" fill="#38bdf8" />
-      <text x="760" y="360" fill="#38bdf8" font-size="12" font-weight="bold">4096 Tok: Max 25.7 Seqs</text>
-
-      <!-- Curve 2: Generation Goodput (Green) -->
-      <path d="M 80 200 Q 300 180 500 150 T 745 129 L 840 120" fill="none" stroke="#4ade80" stroke-width="3.5" />
-      <circle cx="745" cy="129" r="6" fill="#4ade80" />
-      <text x="600" y="115" fill="#4ade80" font-size="12" font-weight="bold">Prompt 3584: Goodput 200.92 tok/s</text>
-
-      <!-- Curve 3: KV RAM Ceiling Line 12.08 GB (Red Dashed) -->
-      <line x1="80" y1="392" x2="840" y2="392" stroke="#f87171" stroke-width="2.5" stroke-dasharray="6" />
-      <text x="100" y="385" fill="#f87171" font-size="12" font-weight="bold">Usable KV RAM Limit (12.08 GB)</text>
-
-      <!-- Curve 4: Batch 24 RAM Usage (Orange) -->
-      <line x1="80" y1="410" x2="840" y2="393" stroke="#fb923c" stroke-width="3" stroke-dasharray="4" />
-      <circle cx="840" cy="393" r="5" fill="#fb923c" />
-
-      <!-- Legend Top Box (Wider box so text fits comfortably inside) -->
-      <rect x="180" y="15" width="540" height="32" fill="#0f172a" rx="6" stroke="#334155" />
-      <circle cx="200" cy="31" r="5" fill="#38bdf8" />
-      <text x="210" y="35" fill="#38bdf8" font-size="11" font-weight="bold">Max Concurrency</text>
-      <circle cx="340" cy="31" r="5" fill="#4ade80" />
-      <text x="350" y="35" fill="#4ade80" font-size="11" font-weight="bold">True Goodput</text>
-      <circle cx="465" cy="31" r="5" fill="#f87171" />
-      <text x="475" y="35" fill="#f87171" font-size="11" font-weight="bold">RAM Limit</text>
-      <circle cx="560" cy="31" r="5" fill="#fb923c" />
-      <text x="570" y="35" fill="#fb923c" font-size="11" font-weight="bold">Batch 24 RAM</text>
-    </svg>
-  </div>
-
-  <div class="grid-cards">
-    <div class="card" style="border-left-color: #38bdf8;">
-      <h3>1. Max Sequence Concurrency (Blue)</h3>
-      <p><code>y = 12.08 / (0.000114688 * x)</code><br>At x=4096 tokens, max sequence capacity caps at <b>25.71 concurrent sequences</b>.</p>
+  <header>
+    <div>
+      <h1>AI Team Intern Audit — Complete Desmos Mathematical Graph</h1>
+      <p>Interactive graph deriving Part A (Tokenizer Fertility), Part B (KV Cache & Concurrency), Part C (Casualization)</p>
     </div>
-    <div class="card" style="border-left-color: #4ade80;">
-      <h3>2. True Output Generation Goodput (Green)</h3>
-      <p><code>y = 1607.4 * (512 / (x + 512))</code><br>At prompt length x=3584, true generation goodput is <b>200.92 tok/s</b> (8.0x lower than reported 1607 tok/s).</p>
-    </div>
-    <div class="card" style="border-left-color: #f87171;">
-      <h3>3. Available KV RAM Ceiling (Red Line)</h3>
-      <p><code>y = 12.08 GB</code><br>Net KV RAM ceiling (22.08GB usable - 8.4GB weights - 1.6GB overhead). Exceeding this triggers preemption thrashing.</p>
-    </div>
-    <div class="card" style="border-left-color: #fb923c;">
-      <h3>4. Batch 24 KV RAM Memory Usage (Orange)</h3>
-      <p><code>y = 24 * 0.000114688 * x</code><br>Batch 24 uses 11.27 GB (93% KV utilization) at 4096 tokens, reaching optimal GPU memory saturation.</p>
-    </div>
-  </div>
+    <span class="badge">Official Audit Graph</span>
+  </header>
 
+  <div id="calculator"></div>
+
+  <script>
+    var elt = document.getElementById('calculator');
+    var calculator = Desmos.GraphingCalculator(elt, {
+      expressions: true,
+      settingsMenu: true,
+      zoomButtons: true,
+      border: false
+    });
+
+    // Set graph math state with all 3 Parts pre-configured
+    calculator.setExpressions([
+      // Folder 1: Part A Tokenizer Fertility Audit
+      { id: 'f1', type: 'folder', title: 'Part A: Tokenizer Fertility & Typology Audit' },
+      { id: 'e1', folderId: 'f1', latex: 'F_{eng}(x) = 1.15 x', color: '#2d70b3', label: 'English Baseline (GPT-2 Fertility = 1.15)', showLabel: true },
+      { id: 'e2', folderId: 'f1', latex: 'F_{hin}(x) = 2.45 x', color: '#388c46', label: 'Hindi (GPT-2 Fertility = 2.45)', showLabel: true },
+      { id: 'e3', folderId: 'f1', latex: 'F_{kan}(x) = 3.90 x', color: '#fa7e19', label: 'Kannada Agglutinative (GPT-2 Fertility = 3.90)', showLabel: true },
+      { id: 'e4', folderId: 'f1', latex: 'F_{tam}(x) = 4.10 x', color: '#d64545', label: 'Tamil Agglutinative (GPT-2 Fertility = 4.10)', showLabel: true },
+      { id: 'e5', folderId: 'f1', latex: 'F_{xlm}(x) = 1.35 x', color: '#6042a6', label: 'XLM-RoBERTa Dravidian (Fertility = 1.35)', showLabel: true },
+      { id: 'p1', folderId: 'f1', latex: 'A_{flaw} = (10, 39)', color: '#fa7e19', label: 'GPT-2 Kannada Subword Explosion (3.9x vs Eng)', showLabel: true },
+
+      // Folder 2: Part B Serving Capacity & Preemption Thrashing
+      { id: 'f2', type: 'folder', title: 'Part B: Serving Capacity & Preemption Thrashing (NVIDIA L4 24GB)' },
+      { id: 'v_kv', folderId: 'f2', latex: 'V_{kv} = 12.08' },
+      { id: 'm_tok', folderId: 'f2', latex: 'm_{tok} = 0.000114688' },
+      { id: 'c_seq', folderId: 'f2', latex: 'C(x) = \\frac{V_{kv}}{m_{tok} \\cdot x}', color: '#2d70b3', label: 'Max Concurrency Capacity C(x)', showLabel: true },
+      { id: 'p_max', folderId: 'f2', latex: 'P_{max} = (4096, 25.71)', color: '#2d70b3', label: '4096-Tok Max Capacity = 25.71 seqs', showLabel: true },
+      { id: 'm_b24', folderId: 'f2', latex: 'M_{24}(x) = 24 \\cdot m_{tok} \\cdot x', color: '#fa7e19', lineStyle: 'DASHED', label: 'Batch 24 KV RAM (GB)', showLabel: true },
+      { id: 'p_b24', folderId: 'f2', latex: 'P_{b24} = (4096, 11.27)', color: '#fa7e19', label: 'Batch 24 at 4096 Tok = 11.27 GB (93% KV RAM)', showLabel: true },
+      { id: 'm_b32', folderId: 'f2', latex: 'M_{32}(x) = 32 \\cdot m_{tok} \\cdot x', color: '#d64545', label: 'Batch 32 KV RAM (OOM Branch)', showLabel: true },
+      { id: 'p_preempt', folderId: 'f2', latex: 'P_{preempt} = (3291, 12.08)', color: '#d64545', label: 'PREEMPTION THRESHOLD: Batch 32 OOMs at 3291 Tok!', showLabel: true },
+      { id: 'ram_ceiling', folderId: 'f2', latex: 'y = 12.08', color: '#d64545', lineStyle: 'DASHED', label: 'Net KV RAM Ceiling (12.08 GB)', showLabel: true },
+      { id: 'g_goodput', folderId: 'f2', latex: 'G(x) = 1607.4 \\cdot \\frac{512}{x + 512}', color: '#388c46', label: 'True Output Generation Goodput G(x)', showLabel: true },
+      { id: 'p_goodput', folderId: 'f2', latex: 'P_{goodput} = (3584, 200.92)', color: '#388c46', label: 'Batch 24 Goodput = 200.92 tok/s (8.0x lower than v0)', showLabel: true },
+      { id: 'th_v0', folderId: 'f2', latex: 'y = 1607.4', color: '#6042a6', lineStyle: 'DASHED', label: 'v0 Flawed Total Throughput (1607.4 tok/s)', showLabel: true },
+
+      // Folder 3: Part C Indic Casualization Strategy & Reviewer Capacity
+      { id: 'f3', type: 'folder', title: 'Part C: Indic Casualization Strategy & Reviewer Capacity' },
+      { id: 'r_max', folderId: 'f3', latex: 'R_{max} = 300', color: '#d64545', lineStyle: 'DASHED', label: '1 Reviewer 10h/wk (2 wks) = 300 Max Evaluated Examples', showLabel: true },
+      { id: 'opt_a', folderId: 'f3', latex: 'L_{lora} = (120, 91)', color: '#2d70b3', label: 'Option A: LoRA SFT (120ms, 91% acc)', showLabel: true },
+      { id: 'opt_b', folderId: 'f3', latex: 'L_{agent} = (2620, 89)', color: '#d64545', label: 'Option B: Rewriter Agent (2620ms - REJECTED)', showLabel: true },
+      { id: 'opt_c', folderId: 'f3', latex: 'L_{prompt} = (135, 88)', color: '#388c46', label: 'Option C: System Prompt (135ms, 88% acc - RECOMMENDED)', showLabel: true }
+    ]);
+
+    // Set initial viewport range for standard viewing
+    calculator.setMathBounds({
+      left: -200,
+      right: 4500,
+      bottom: -50,
+      top: 1800
+    });
+  </script>
 </body>
 </html>
