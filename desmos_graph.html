@@ -62,11 +62,11 @@
 
   <header>
     <div>
-      <h1>AI Team Intern Audit — Clean Desmos Mathematical Graph</h1>
-      <p>Domain-bounded, non-cluttered curves for Part A, Part B, and Part C</p>
+      <h1>AI Team Intern Audit — Complete Multi-Part Desmos Graph</h1>
+      <p>Extended X-domain for Part A fertility rays + Part B serving + Part C strategy</p>
     </div>
     <div class="btn-group">
-      <button class="btn btn-success" onclick="copyConsoleScript()">📋 Copy Ultra-Clean Script</button>
+      <button class="btn btn-success" onclick="copyConsoleScript()">📋 Copy Perfect Script</button>
       <a href="https://www.desmos.com/calculator/ebhw7wvtzf" target="_blank" style="text-decoration:none;">
         <button class="btn">🚀 Open Desmos.com Link</button>
       </a>
@@ -87,12 +87,12 @@
     var mathExpressions = [
       // Folder 1: Part A Tokenizer Fertility Audit
       { id: 'f1', type: 'folder', title: 'Part A: Tokenizer Fertility Audit' },
-      { id: 'e1', folderId: 'f1', latex: 'F_{eng}(x) = 1.15 x \\{0 \\le x \\le 100\\}', color: '#2d70b3' },
-      { id: 'e2', folderId: 'f1', latex: 'F_{hin}(x) = 2.45 x \\{0 \\le x \\le 100\\}', color: '#388c46' },
-      { id: 'e3', folderId: 'f1', latex: 'F_{kan}(x) = 3.90 x \\{0 \\le x \\le 100\\}', color: '#fa7e19' },
-      { id: 'e4', folderId: 'f1', latex: 'F_{tam}(x) = 4.10 x \\{0 \\le x \\le 100\\}', color: '#d64545' },
-      { id: 'e5', folderId: 'f1', latex: 'F_{xlm}(x) = 1.35 x \\{0 \\le x \\le 100\\}', color: '#6042a6' },
-      { id: 'p1', folderId: 'f1', latex: 'A_{flaw} = (10, 39)', color: '#fa7e19', label: 'Kannada Explosion (3.9x)', showLabel: true },
+      { id: 'e1', folderId: 'f1', latex: 'F_{eng}(x) = 1.15 x \\{0 \\le x \\le 1000\\}', color: '#2d70b3' },
+      { id: 'e2', folderId: 'f1', latex: 'F_{hin}(x) = 2.45 x \\{0 \\le x \\le 1000\\}', color: '#388c46' },
+      { id: 'e3', folderId: 'f1', latex: 'F_{kan}(x) = 3.90 x \\{0 \\le x \\le 1000\\}', color: '#fa7e19' },
+      { id: 'e4', folderId: 'f1', latex: 'F_{tam}(x) = 4.10 x \\{0 \\le x \\le 1000\\}', color: '#d64545' },
+      { id: 'e5', folderId: 'f1', latex: 'F_{xlm}(x) = 1.35 x \\{0 \\le x \\le 1000\\}', color: '#6042a6' },
+      { id: 'p1', folderId: 'f1', latex: 'A_{flaw} = (100, 390)', color: '#fa7e19', label: 'Kannada Subword Explosion (3.9x)', showLabel: true },
 
       // Folder 2: Part B Serving Capacity & Preemption Boundary (L4 24GB)
       { id: 'f2', type: 'folder', title: 'Part B: Serving Capacity & Preemption Boundary (L4 24GB)' },
@@ -116,13 +116,13 @@
     ];
 
     calculator.setExpressions(mathExpressions);
-    calculator.setMathBounds({ left: -200, right: 4500, bottom: -10, top: 250 });
+    calculator.setMathBounds({ left: -200, right: 4500, bottom: -10, top: 450 });
 
     function copyConsoleScript() {
       var scriptText = "Calc.setExpressions(" + JSON.stringify(mathExpressions) + ");\n" +
-                       "Calc.setMathBounds({ left: -200, right: 4500, bottom: -10, top: 250 });";
+                       "Calc.setMathBounds({ left: -200, right: 4500, bottom: -10, top: 450 });";
       navigator.clipboard.writeText(scriptText).then(function() {
-        alert("Copied Ultra-Clean Script! Paste into Chrome Console and click Save!");
+        alert("Copied Script! Paste into Chrome Console and click Save!");
       });
     }
   </script>
