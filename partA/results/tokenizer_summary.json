@@ -1,0 +1,122 @@
+{
+  "eng": {
+    "gpt2": {
+      "sentences": 25,
+      "words": 223,
+      "graphemes": 1404,
+      "utf8_bytes": 1404,
+      "tokens": 264,
+      "tokens_per_word": 1.184,
+      "tokens_per_grapheme": 0.188,
+      "tokens_per_byte": 0.188,
+      "tokens_per_sentence": 10.56
+    },
+    "xlm-roberta-base": {
+      "sentences": 25,
+      "words": 223,
+      "graphemes": 1404,
+      "utf8_bytes": 1404,
+      "tokens": 292,
+      "tokens_per_word": 1.309,
+      "tokens_per_grapheme": 0.208,
+      "tokens_per_byte": 0.208,
+      "tokens_per_sentence": 11.68
+    }
+  },
+  "hin": {
+    "gpt2": {
+      "sentences": 25,
+      "words": 266,
+      "graphemes": 887,
+      "utf8_bytes": 3719,
+      "tokens": 2233,
+      "tokens_per_word": 8.395,
+      "tokens_per_grapheme": 2.517,
+      "tokens_per_byte": 0.6,
+      "tokens_per_sentence": 89.32
+    },
+    "xlm-roberta-base": {
+      "sentences": 25,
+      "words": 266,
+      "graphemes": 887,
+      "utf8_bytes": 3719,
+      "tokens": 385,
+      "tokens_per_word": 1.447,
+      "tokens_per_grapheme": 0.434,
+      "tokens_per_byte": 0.104,
+      "tokens_per_sentence": 15.4
+    }
+  },
+  "tam": {
+    "gpt2": {
+      "sentences": 25,
+      "words": 183,
+      "graphemes": 1107,
+      "utf8_bytes": 4863,
+      "tokens": 4863,
+      "tokens_per_word": 26.574,
+      "tokens_per_grapheme": 4.393,
+      "tokens_per_byte": 1.0,
+      "tokens_per_sentence": 194.52
+    },
+    "xlm-roberta-base": {
+      "sentences": 25,
+      "words": 183,
+      "graphemes": 1107,
+      "utf8_bytes": 4863,
+      "tokens": 455,
+      "tokens_per_word": 2.486,
+      "tokens_per_grapheme": 0.411,
+      "tokens_per_byte": 0.094,
+      "tokens_per_sentence": 18.2
+    }
+  },
+  "kan": {
+    "gpt2": {
+      "sentences": 25,
+      "words": 171,
+      "graphemes": 971,
+      "utf8_bytes": 4197,
+      "tokens": 4118,
+      "tokens_per_word": 24.082,
+      "tokens_per_grapheme": 4.241,
+      "tokens_per_byte": 0.981,
+      "tokens_per_sentence": 164.72
+    },
+    "xlm-roberta-base": {
+      "sentences": 25,
+      "words": 171,
+      "graphemes": 971,
+      "utf8_bytes": 4197,
+      "tokens": 423,
+      "tokens_per_word": 2.474,
+      "tokens_per_grapheme": 0.436,
+      "tokens_per_byte": 0.101,
+      "tokens_per_sentence": 16.92
+    }
+  },
+  "tel": {
+    "gpt2": {
+      "sentences": 25,
+      "words": 177,
+      "graphemes": 799,
+      "utf8_bytes": 4035,
+      "tokens": 4027,
+      "tokens_per_word": 22.751,
+      "tokens_per_grapheme": 5.04,
+      "tokens_per_byte": 0.998,
+      "tokens_per_sentence": 161.08
+    },
+    "xlm-roberta-base": {
+      "sentences": 25,
+      "words": 177,
+      "graphemes": 799,
+      "utf8_bytes": 4035,
+      "tokens": 433,
+      "tokens_per_word": 2.446,
+      "tokens_per_grapheme": 0.542,
+      "tokens_per_byte": 0.107,
+      "tokens_per_sentence": 17.32
+    }
+  }
+}

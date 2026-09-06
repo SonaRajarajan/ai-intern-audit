@@ -1,0 +1,56 @@
+{
+  "dataset_name": "FLORES-200 Aligned Multilingual Benchmark Sample",
+  "source": "Meta FLORES-200 Parallel Translation Dataset",
+  "languages": [
+    "eng",
+    "hin",
+    "tam",
+    "kan",
+    "tel"
+  ],
+  "total_sentences_per_language": 25,
+  "is_parallel": true,
+  "normalization": "Unicode NFC",
+  "stats": {
+    "eng": {
+      "sentences": 25,
+      "words": 223,
+      "grapheme_clusters": 1404,
+      "utf8_bytes": 1404,
+      "bytes_per_word": 6.3,
+      "graphemes_per_word": 6.3
+    },
+    "hin": {
+      "sentences": 25,
+      "words": 266,
+      "grapheme_clusters": 887,
+      "utf8_bytes": 3719,
+      "bytes_per_word": 13.98,
+      "graphemes_per_word": 3.33
+    },
+    "tam": {
+      "sentences": 25,
+      "words": 183,
+      "grapheme_clusters": 1107,
+      "utf8_bytes": 4863,
+      "bytes_per_word": 26.57,
+      "graphemes_per_word": 6.05
+    },
+    "kan": {
+      "sentences": 25,
+      "words": 171,
+      "grapheme_clusters": 971,
+      "utf8_bytes": 4197,
+      "bytes_per_word": 24.54,
+      "graphemes_per_word": 5.68
+    },
+    "tel": {
+      "sentences": 25,
+      "words": 177,
+      "grapheme_clusters": 799,
+      "utf8_bytes": 4035,
+      "bytes_per_word": 22.8,
+      "graphemes_per_word": 4.51
+    }
+  }
+}
